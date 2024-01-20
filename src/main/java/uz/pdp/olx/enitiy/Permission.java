@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 
 @Entity
-@Table(name = "_permission")
+@Table(name = "permission")
 public class Permission {
     @Id
     @Column(name = "id", nullable = false)
