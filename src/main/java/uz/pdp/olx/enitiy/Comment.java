@@ -12,12 +12,9 @@ import lombok.Setter;
 @Table(name = "comment")
 public class Comment {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "test", nullable = false)
     private String test;
 
     @NotNull
@@ -27,7 +24,7 @@ public class Comment {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+//    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
 }
