@@ -1,44 +1,48 @@
 package uz.pdp.olx.enitiy;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "_user")
+@Table(name = "users")
 public class User {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    @Column(unique = true)
+    private String username;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
     private UpdateDate updateDate;
 
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "email", nullable = false)
     private String email;
 
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "password", nullable = false)
     private String password;
 
-    @NotNull
-    @Column(name = "rate", nullable = false)
     private Integer rate;
 
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "reviews", nullable = false)
     private String reviews;
     @ManyToMany
     private List<Permission> permissions;

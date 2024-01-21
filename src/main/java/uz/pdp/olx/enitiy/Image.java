@@ -12,12 +12,9 @@ import lombok.Setter;
 @Table(name = "image")
 public class Image {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "image_path", nullable = false)
     private String imagePath;
 
     @NotNull

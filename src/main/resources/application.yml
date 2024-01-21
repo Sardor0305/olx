@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/olx
+    username: postgres
+    password: adgjmp123
+    driver-class-name: org.postgresql.Driver
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 587
+    username: 974005a5c5c303
+    password: 6fc2a451bf42f3
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+jwt:
+  token:
+    secret-key: d12ef765cf731897283ba2845488b8e41f8b10d275268249d80d9419a46d315f
+    expiration-mills: 60000
+
+frontend:
+  url: http://localhost:8080/auth/verify?token=
+  support-email: pdp_support@gmail.uz
