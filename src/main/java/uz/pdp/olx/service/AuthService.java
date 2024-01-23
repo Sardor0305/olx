@@ -1,6 +1,7 @@
 package uz.pdp.olx.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import uz.pdp.olx.enitiy.Authentication;
 import uz.pdp.olx.enitiy.User;
