@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import uz.pdp.olx.exception.ProductNotFoundException;
 import uz.pdp.olx.exception.TokenIsExpiredException;
 import uz.pdp.olx.exception.TokenNotFoundException;
 import uz.pdp.olx.exception.UserNotFoundException;
@@ -24,6 +25,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TokenIsExpiredException.class)
     public ResponseEntity<?> handleTokenIsExpiredException(TokenIsExpiredException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(exception.getMessage());
+    }
+    @ExceptionHandler(value = ProductNotFoundException.class)
+    public ResponseEntity<?> handleNotFoundException(ProductNotFoundException e){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(e.getMessage());
     }
 
 

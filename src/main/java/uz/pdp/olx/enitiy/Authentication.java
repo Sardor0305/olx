@@ -18,7 +18,7 @@ public class Authentication {
     @OneToOne
     private User user;
 
-    @Column(nullable = false)
+    @Column()
     private String token;
 
     private LocalDateTime creationTime;

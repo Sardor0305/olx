@@ -1,5 +1,9 @@
 package uz.pdp.olx.dto;
 
-public record UserRegisterDto(String email, String password){
+import java.time.LocalDateTime;
+
+public record UserRegisterDto(String email,
+                              String password
+                              ) {
 
 }
