@@ -17,13 +17,13 @@ public class Comment {
 
     private String test;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
+//    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
