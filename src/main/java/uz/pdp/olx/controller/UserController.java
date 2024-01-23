@@ -10,7 +10,8 @@ import uz.pdp.olx.service.UserService;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-public class UserController {
+public class
+UserController {
 
     private final UserService userService;
 
