@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/olx
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: adgjmp123
+    password: 1
     driver-class-name: org.postgresql.Driver
   mail:
     host: sandbox.smtp.mailtrap.io
@@ -19,7 +19,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
 
 jwt:

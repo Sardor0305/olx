@@ -40,7 +40,7 @@ public class PermissionService {
     }
 
 
-    public boolean updatePermission(Long id, PermissionDto permissionDto) {
+    public Boolean updatePermission(Long id, PermissionDto permissionDto) {
         Permission existingPermission = permissionRepository.findById(id).orElse(null);
         if (existingPermission != null) {
             existingPermission.setValue(permissionDto.getValue());
@@ -51,7 +51,7 @@ public class PermissionService {
     }
 
 
-    public boolean deletePermission(Long id) {
+    public Boolean deletePermission(Long id) {
         Permission existingPermission = permissionRepository.findById(id).orElse(null);
         if (existingPermission != null) {
             permissionRepository.delete(existingPermission);

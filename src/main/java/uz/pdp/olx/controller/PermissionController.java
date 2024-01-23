@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import uz.pdp.olx.dto.PermissionDto;
 import uz.pdp.olx.service.PermissionService;
 @RestController
-@RequestMapping("/api/permissions")
+@RequestMapping("/permissions")
 public class PermissionController {
     private final PermissionService permissionService;
 
@@ -16,7 +16,7 @@ public class PermissionController {
         this.permissionService = permissionService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<String> createPermission(@RequestBody PermissionDto permissionDto) {
         permissionService.createPermission(permissionDto);
         return new ResponseEntity<>("Permission created successfully", HttpStatus.CREATED);
@@ -32,7 +32,7 @@ public class PermissionController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<String> updatePermission(@PathVariable Long id, @RequestBody PermissionDto permissionDto) {
         boolean updated = permissionService.updatePermission(id, permissionDto);
         if (updated) {
@@ -42,7 +42,7 @@ public class PermissionController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deletePermission(@PathVariable Long id) {
         boolean deleted = permissionService.deletePermission(id);
         if (deleted) {
