@@ -20,13 +20,11 @@ public class ProductDto {
 
     private User user;
 
-    private ItemCondition ItemCondition;
+    private ItemCondition itemCondition;
 
     private Double price;
 
     private Boolean isActive;
-
-    private Integer rate;
 
     private Category category;
 
