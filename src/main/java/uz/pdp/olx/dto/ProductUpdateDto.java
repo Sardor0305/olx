@@ -10,12 +10,12 @@ import uz.pdp.olx.enam.ItemCondition;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductSaveDto {
+public class ProductUpdateDto {
+    private Long id;
+
     private String title;
 
     private String description;
-
-    private Long userId;
 
     private Long categoryId;
 
