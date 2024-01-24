@@ -16,10 +16,12 @@ public class Image {
     private Long id;
 
     private String imagePath;
+    @Column(nullable = false)
+    private String contentType;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+//    @NotNull
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "product_id", nullable = false)
+//    private Product product;
 
 }
