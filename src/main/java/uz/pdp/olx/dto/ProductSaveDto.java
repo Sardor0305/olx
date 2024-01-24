@@ -17,7 +17,7 @@ public class ProductSaveDto {
 
     private Long userId;
 
-    private Long subCategoryId;
+    private Long categoryId;
 
     private ItemCondition ItemCondition;
 

@@ -1,8 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/testdb
+    url: jdbc:postgresql://localhost:5432/olx
     username: postgres
     driver-class-name: org.postgresql.Driver
+    password: 123
   mail:
     host: sandbox.smtp.mailtrap.io
     port: 587
@@ -29,3 +30,8 @@ jwt:
 frontend:
   url: http://localhost:8080/auth/verify?token=
   support-email: pdp_support@gmail.uz
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+    url:

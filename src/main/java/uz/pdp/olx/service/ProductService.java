@@ -7,8 +7,8 @@ import uz.pdp.olx.dto.ProductDto;
 import uz.pdp.olx.dto.ProductSaveDto;
 import uz.pdp.olx.enitiy.Product;
 import uz.pdp.olx.exception.ProductNotFoundException;
+import uz.pdp.olx.repository.CategoryRepository;
 import uz.pdp.olx.repository.ProductRepository;
-import uz.pdp.olx.repository.SubCategoryRepository;
 import uz.pdp.olx.repository.UserRepository;
 
 import java.util.List;
@@ -20,11 +20,11 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
-    private final SubCategoryRepository subCategoryRepository;
+    private final CategoryRepository categoryRepository;
 
 
     public ProductDto save(ProductSaveDto productSaveDto){
-        log.info(productSaveDto.getSubCategoryId() + " ------ ");
+        log.info(productSaveDto.getCategoryId() + " ------ ");
         log.info(productSaveDto.getUserId() + " ------ ");
       Product product = new Product();
         product.setTitle(productSaveDto.getTitle());
@@ -34,8 +34,8 @@ public class ProductService {
 //        product.setRate(productSaveDto.getRate());
 //        product.setReviews(productSaveDto.getReviews());
         product.setUser(userRepository.findById(productSaveDto.getUserId()).orElseThrow(()-> new RuntimeException("user not f")));
-        product.setSubCategory(subCategoryRepository.findById(productSaveDto.getSubCategoryId()).orElseThrow(
-                ()-> new RuntimeException("subcategory not found")
+        product.setCategory(categoryRepository.findById(productSaveDto.getCategoryId()).orElseThrow(
+                ()-> new RuntimeException("category not found")
         ));
 
         return new ProductDto(productRepository.save(product));

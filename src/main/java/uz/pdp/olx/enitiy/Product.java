@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import uz.pdp.olx.configuration.auditing.EntityAuditing;
 import uz.pdp.olx.enam.ItemCondition;
 
 @Getter
@@ -12,7 +13,7 @@ import uz.pdp.olx.enam.ItemCondition;
 @Entity
 
 @Table(name = "product")
-public class Product {
+public class Product extends EntityAuditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,24 +23,22 @@ public class Product {
     private String description;
 
 //    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
 //    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subcategory_id")
-    private SubCategory subCategory;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category Category;
 
     @Enumerated(EnumType.STRING)
     private ItemCondition itemCondition;
 
     private Double price;
 
-    private Boolean isActive;
+    private Boolean isActive = true;
 
-    private Integer rate;
-
-    private String reviews;
+    private Float ratingValue;
 
 }

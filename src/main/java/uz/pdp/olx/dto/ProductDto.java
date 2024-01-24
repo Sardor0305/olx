@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pdp.olx.enam.ItemCondition;
+import uz.pdp.olx.enitiy.Category;
 import uz.pdp.olx.enitiy.Product;
-import uz.pdp.olx.enitiy.SubCategory;
 import uz.pdp.olx.enitiy.User;
 
 @Getter
@@ -28,7 +28,7 @@ public class ProductDto {
 
     private Integer rate;
 
-    private SubCategory subCategory;
+    private Category category;
 
     public ProductDto(Product product) {
         this.title=product.getTitle();
@@ -36,7 +36,7 @@ public class ProductDto {
         this.isActive= product.getIsActive();
         this.price=product.getPrice();
         this.user = product.getUser();
-        this.subCategory = product.getSubCategory();
+        this.category = product.getCategory();
     }
 }
 
