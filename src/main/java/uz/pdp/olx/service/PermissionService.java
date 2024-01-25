@@ -3,7 +3,10 @@ package uz.pdp.olx.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uz.pdp.olx.dto.PermissionDto;
+import uz.pdp.olx.dto.PermissionSaveDto;
 import uz.pdp.olx.enitiy.Permission;
+import uz.pdp.olx.exception.NotFoundException;
+import uz.pdp.olx.exception.NullOrEmptyException;
 import uz.pdp.olx.repository.PermissionRepository;
 
 import java.util.List;
@@ -19,15 +22,19 @@ public class PermissionService {
     }
 
 
-    public void createPermission(PermissionDto permissionDto) {
-        Permission permission = new Permission();
-        permission.setValue(permissionDto.getValue());
-        permissionRepository.save(permission);
+    public PermissionDto createPermission(PermissionSaveDto permissionSaveDto) {
+        if(permissionSaveDto == null) {
+            throw new NullOrEmptyException("Permission ");
+        }
+       return PermissionDto.builder()
+                .value(permissionSaveDto.getValue())
+                .build();
     }
 
 
     public PermissionDto getPermissionById(Long id) {
-        Permission permission = permissionRepository.findById(id).orElse(null);
+        Permission permission = permissionRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Permission "));
         return permission != null ? new PermissionDto(permission.getId(), permission.getValue()) : null;
     }
 
@@ -40,14 +47,17 @@ public class PermissionService {
     }
 
 
-    public Boolean updatePermission(Long id, PermissionDto permissionDto) {
-        Permission existingPermission = permissionRepository.findById(id).orElse(null);
+    public PermissionDto updatePermission(PermissionDto permissionDto) {
+        Permission existingPermission = permissionRepository.findById(permissionDto.getId())
+                .orElseThrow(() -> new NotFoundException("Permission "));
+
         if (existingPermission != null) {
-            existingPermission.setValue(permissionDto.getValue());
-            permissionRepository.save(existingPermission);
-            return true;
+            return PermissionDto.builder()
+                    .id(permissionDto.getId())
+                    .value(permissionDto.getValue())
+                    .build();
         }
-        return false;
+        return null;
     }
 
 

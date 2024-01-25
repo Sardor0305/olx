@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.olx.dto.PermissionDto;
+import uz.pdp.olx.dto.PermissionSaveDto;
 import uz.pdp.olx.service.PermissionService;
 @RestController
 @RequestMapping("/permissions")
@@ -17,9 +18,8 @@ public class PermissionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createPermission(@RequestBody PermissionDto permissionDto) {
-        permissionService.createPermission(permissionDto);
-        return new ResponseEntity<>("Permission created successfully", HttpStatus.CREATED);
+    public ResponseEntity<?> createPermission(@RequestBody PermissionSaveDto permissionDto) {
+        return ResponseEntity.ok(permissionService.createPermission(permissionDto));
     }
 
     @GetMapping("/{id}")
@@ -32,14 +32,9 @@ public class PermissionController {
         }
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<String> updatePermission(@PathVariable Long id, @RequestBody PermissionDto permissionDto) {
-        boolean updated = permissionService.updatePermission(id, permissionDto);
-        if (updated) {
-            return new ResponseEntity<>("Permission updated successfully", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Permission not found", HttpStatus.NOT_FOUND);
-        }
+    @PutMapping("/update")
+    public ResponseEntity<?> updatePermission(@RequestBody PermissionDto permissionDto) {
+        return ResponseEntity.ok(permissionService.updatePermission(permissionDto));
     }
 
     @DeleteMapping("/delete/{id}")
