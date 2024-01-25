@@ -1,7 +1,9 @@
 package uz.pdp.olx.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.olx.dto.UserRegisterDto;
 import uz.pdp.olx.service.AuthService;
