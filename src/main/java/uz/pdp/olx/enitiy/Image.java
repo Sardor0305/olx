@@ -16,6 +16,9 @@ public class Image {
     private Long id;
 
     private String imagePath;
+    @Column(nullable = false)
+    private String contentType;
+
 
 
     @ManyToOne(fetch = FetchType.LAZY)
