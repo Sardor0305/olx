@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import uz.pdp.olx.dto.ProductDto;
 import uz.pdp.olx.dto.ProductSaveDto;
 import uz.pdp.olx.dto.ProductUpdateDto;
+import uz.pdp.olx.dto.UserDto;
 import uz.pdp.olx.enitiy.Product;
 import uz.pdp.olx.exception.CategoryNotFoundException;
 import uz.pdp.olx.exception.ProductNotFoundException;
@@ -24,8 +25,6 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
-    @Lazy
-    private final UserService userService;
     private final CategoryRepository categoryRepository;
 
 
@@ -42,9 +41,10 @@ public class ProductService {
         product.setCategory(categoryRepository.findById(productSaveDto.getCategoryId()).orElseThrow(
                 CategoryNotFoundException::new
         ));
+        productRepository.save(product);
         return new ProductDto(product.getTitle(),
                 product.getDescription(),
-                userService.findById(product.getUser().getId()),
+                new UserDto(product.getUser()),
                 product.getItemCondition(),
                 product.getPrice(),
                 product.getIsActive(),
