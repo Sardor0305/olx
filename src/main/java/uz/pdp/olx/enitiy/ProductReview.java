@@ -1,27 +1,24 @@
 package uz.pdp.olx.enitiy;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+@Entity
 @Getter
 @Setter
-@Entity
-@Table(name = "_like")
-public class Like {
+@AllArgsConstructor
+@NoArgsConstructor
+public class ProductReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    private String text;
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    private Boolean isLike;
-
 }

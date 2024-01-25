@@ -2,13 +2,13 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/shashvar
     username: postgres
-    password: root123
     driver-class-name: org.postgresql.Driver
+    password: 123
   mail:
     host: sandbox.smtp.mailtrap.io
     port: 587
-    username: 974005a5c5c303
-    password: 6fc2a451bf42f3
+    username: 8a6149a90372c5
+    password: a8c610325a9776
     properties:
       mail:
         smtp:
@@ -19,7 +19,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
 
 jwt:
@@ -30,3 +30,8 @@ jwt:
 frontend:
   url: http://localhost:8080/auth/verify?token=
   support-email: pdp_support@gmail.uz
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+    url:
