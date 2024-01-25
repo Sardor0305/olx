@@ -2,6 +2,7 @@ package uz.pdp.olx.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import uz.pdp.olx.dto.ProductDto;
 import uz.pdp.olx.dto.ProductSaveDto;
@@ -9,6 +10,7 @@ import uz.pdp.olx.dto.ProductUpdateDto;
 import uz.pdp.olx.enitiy.Product;
 import uz.pdp.olx.exception.CategoryNotFoundException;
 import uz.pdp.olx.exception.ProductNotFoundException;
+import uz.pdp.olx.exception.UserNotFoundException;
 import uz.pdp.olx.repository.CategoryRepository;
 import uz.pdp.olx.repository.ProductRepository;
 import uz.pdp.olx.repository.UserRepository;
@@ -22,6 +24,8 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    @Lazy
+    private final UserService userService;
     private final CategoryRepository categoryRepository;
 
 
@@ -34,11 +38,17 @@ public class ProductService {
         product.setItemCondition(productSaveDto.getItemCondition());
         product.setPrice(productSaveDto.getPrice());
         product.setItemCondition(productSaveDto.getItemCondition());
-        product.setUser(userRepository.findById(productSaveDto.getUserId()).orElseThrow(()-> new RuntimeException("user not f")));
+        product.setUser(userRepository.findById(productSaveDto.getUserId()).orElseThrow(()-> UserNotFoundException.byId(productSaveDto.getUserId())));
         product.setCategory(categoryRepository.findById(productSaveDto.getCategoryId()).orElseThrow(
                 CategoryNotFoundException::new
         ));
-        return new ProductDto(productRepository.save(product));
+        return new ProductDto(product.getTitle(),
+                product.getDescription(),
+                userService.findById(product.getUser().getId()),
+                product.getItemCondition(),
+                product.getPrice(),
+                product.getIsActive(),
+                product.getCategory());
     }
 
 

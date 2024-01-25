@@ -18,7 +18,7 @@ public class ProductDto {
 
     private String description;
 
-    private User user;
+    private UserDto user;
 
     private ItemCondition itemCondition;
 
@@ -33,7 +33,7 @@ public class ProductDto {
         this.description=product.getDescription();
         this.isActive= product.getIsActive();
         this.price=product.getPrice();
-        this.user = product.getUser();
+        this.user = new UserDto(product.getUser());
         this.category = product.getCategory();
     }
 }

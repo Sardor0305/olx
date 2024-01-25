@@ -1,10 +1,12 @@
 package uz.pdp.olx.dto;
 
+import jdk.dynalink.linker.LinkerServices;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.pdp.olx.enitiy.User;
 
 @Getter
 @Setter
@@ -18,4 +20,10 @@ public class UserDto {
     private String phoneNumber;
 
 
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.phoneNumber = user.getPhoneNumber();
+    }
 }
