@@ -27,6 +27,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleProductNotFoundException(ProductNotFoundException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(e.getMessage());
     }
+    @ExceptionHandler(value = CommentNotFoundException.class)
+    public ResponseEntity<?> handleCommentNotFoundException(CommentNotFoundException e){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(e.getMessage());
+    }
+
     @ExceptionHandler(value = AlreadyExistsException.class)
     public ResponseEntity<?> handleAlreadyExistException(AlreadyExistsException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(e.getMessage());
