@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/olx
+    url: jdbc:postgresql://viaduct.proxy.rlwy.net:51137/railway
     username: postgres
     driver-class-name: org.postgresql.Driver
-    password: 123
+    password: D5*eedAggc6C*12E1g2ef2F5a3ddG6*d
   mail:
     host: sandbox.smtp.mailtrap.io
     port: 587

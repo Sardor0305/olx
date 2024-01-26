@@ -3,15 +3,16 @@ package uz.pdp.olx.enitiy;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import uz.pdp.olx.configuration.auditing.EntityAuditing;
 import uz.pdp.olx.enam.ItemCondition;
 
 @Getter
 @Setter
 @Entity
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "product")
 public class Product extends EntityAuditing {
     @Id
@@ -30,7 +31,7 @@ public class Product extends EntityAuditing {
 //    @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category Category;
+    private Category category;
 
     @Enumerated(EnumType.STRING)
     private ItemCondition itemCondition;

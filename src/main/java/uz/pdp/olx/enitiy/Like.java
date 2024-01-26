@@ -2,14 +2,18 @@ package uz.pdp.olx.enitiy;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "_like")
+@Table(name = "`like`")
 public class Like {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +26,5 @@ public class Like {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Boolean isLike;
 
 }
