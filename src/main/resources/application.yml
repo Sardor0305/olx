@@ -1,14 +1,14 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/olx
+    url: jdbc:postgresql://localhost:5432/testdb
     username: postgres
     driver-class-name: org.postgresql.Driver
-    password: 123
+    password: xoja@3226
   mail:
     host: sandbox.smtp.mailtrap.io
     port: 587
-    username: 8a6149a90372c5
-    password: a8c610325a9776
+    username: 01c2927a75f449
+    password: 6f3fa86259b81c
     properties:
       mail:
         smtp:
