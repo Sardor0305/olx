@@ -6,6 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
+
 @Table(name = "_category")
 @AllArgsConstructor
 @NoArgsConstructor
