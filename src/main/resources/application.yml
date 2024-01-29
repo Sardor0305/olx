@@ -3,12 +3,12 @@ spring:
     url: jdbc:postgresql://localhost:5432/olx
     username: postgres
     driver-class-name: org.postgresql.Driver
-    password: 123
+    password: adgjmp123
   mail:
     host: sandbox.smtp.mailtrap.io
     port: 587
-    username: 8a6149a90372c5
-    password: a8c610325a9776
+    username: 974005a5c5c303
+    password: 6fc2a451bf42f3
     properties:
       mail:
         smtp:
@@ -16,11 +16,11 @@ spring:
             enable: true
           auth: true
 
-
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    open-in-view: false
 
 jwt:
   token:
