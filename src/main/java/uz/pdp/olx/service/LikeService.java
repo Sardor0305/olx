@@ -1,6 +1,5 @@
 package uz.pdp.olx.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -9,12 +8,13 @@ import uz.pdp.olx.dto.LikeSaveDto;
 import uz.pdp.olx.enitiy.Like;
 import uz.pdp.olx.enitiy.Product;
 import uz.pdp.olx.enitiy.User;
+import uz.pdp.olx.exception.NotFoundException;
+import uz.pdp.olx.exception.NullOrEmptyException;
 import uz.pdp.olx.repository.LikeRepository;
 import uz.pdp.olx.repository.ProductRepository;
 import uz.pdp.olx.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,13 +29,19 @@ public class LikeService {
 
 
     public LikeDto getLikeById(Long id) {
+        if (id == null) {
+            throw new NullOrEmptyException("Id");
+        }
         Like optionalLike = likeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Like not found"));
-      return   new LikeDto(optionalLike.getId(),optionalLike.getUser().getId(),optionalLike.getProduct().getId());
+                .orElseThrow(() -> new NotFoundException("Like"));
+      return new LikeDto(optionalLike.getId(),optionalLike.getUser().getId(),optionalLike.getProduct().getId());
 
     }
 
     public List<LikeDto> getLikesByUserId(Long userId) {
+        if (userId == null) {
+            throw new NullOrEmptyException("UserId");
+        }
         List<Like> likes = likeRepository.findByUserId(userId);
         return likes.stream()
                 .map(like -> new LikeDto(like.getId(),like.getUser().getId(),like.getProduct().getId()))
@@ -43,6 +49,9 @@ public class LikeService {
     }
 
     public List<LikeDto> getLikesByProductId(Long productId) {
+        if (productId == null) {
+            throw new NullOrEmptyException("ProductId");
+        }
         List<Like> likes = likeRepository.findByProductId(productId);
         return likes.stream()
                 .map(like -> new LikeDto(like.getId(),like.getUser().getId(),like.getProduct().getId()))
@@ -50,35 +59,24 @@ public class LikeService {
     }
 
     public LikeDto addLike(LikeSaveDto likeSaveDto) {
-        // userId orqali User obyektini olish
-        User user = userRepository.findById(likeSaveDto.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + likeSaveDto.getUserId()));
 
-        // productId orqali Product obyektini olish
-        Product product = productRepository.findById(likeSaveDto.getProductId())
-                .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + likeSaveDto.getProductId()));
-
-        // Like obyektini shakllantirish
-        Like like = new Like();
-        like.setUser(user);
-        like.setProduct(product);
-
-        // Saqlash
-        Like addedLike = likeRepository.save(like);
-
-        // LikeDto ga o'zgartirish
-        return new LikeDto(like.getId(),like.getUser().getId(),like.getProduct().getId());
-    }
-
-    public LikeDto updateLike(Long id, LikeDto likeDto) {
-        Optional<Like> optionalLike = likeRepository.findById(id);
-        if (optionalLike.isPresent()) {
-            Like oldLike = optionalLike.get();
-            modelMapper.map(likeDto, oldLike);
-            Like updatedLike = likeRepository.save(oldLike);
-            return new LikeDto(oldLike.getId(),oldLike.getUser().getId(),oldLike.getProduct().getId());
+        if (likeSaveDto.getUserId() == null) {
+            throw new NullOrEmptyException("UserId");
         }
-        return null;
+        if (likeSaveDto.getProductId() == null) {
+            throw new NullOrEmptyException("ProductId");
+        }
+
+        User user = userRepository.findById(likeSaveDto.getUserId())
+                .orElseThrow(() -> new NotFoundException("User"));
+
+        Product product = productRepository.findById(likeSaveDto.getProductId())
+                .orElseThrow(() -> new NotFoundException("Product"));
+
+        return new LikeDto(likeRepository.save(Like.builder()
+                .user(user)
+                .product(product)
+                .build()));
     }
 
     public void deleteLike(Long id) {

@@ -1,7 +1,14 @@
 package uz.pdp.olx.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.olx.dto.LikeDto;
 import uz.pdp.olx.dto.LikeSaveDto;
 import uz.pdp.olx.service.LikeService;
@@ -33,11 +40,6 @@ public class LikeController {
     @PostMapping("/add")
     public LikeDto addLike(@RequestBody LikeSaveDto likeSaveDto) {
         return likeService.addLike(likeSaveDto);
-    }
-
-    @PutMapping("/update/{id}")
-    public LikeDto updateLike(@PathVariable Long id, @RequestBody LikeDto likeDto) {
-        return likeService.updateLike(id, likeDto);
     }
 
     @DeleteMapping("/delete/{id}")

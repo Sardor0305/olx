@@ -1,9 +1,11 @@
 package uz.pdp.olx.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import uz.pdp.olx.enitiy.Comment;
-import uz.pdp.olx.enitiy.Product;
-import uz.pdp.olx.enitiy.User;
 
 @Getter
 @Setter

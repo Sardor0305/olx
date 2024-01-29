@@ -1,9 +1,19 @@
 package uz.pdp.olx.enitiy;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import uz.pdp.olx.configuration.auditing.EntityAuditing;
 import uz.pdp.olx.enam.ItemCondition;
 
@@ -23,12 +33,10 @@ public class Product extends EntityAuditing {
 
     private String description;
 
-//    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
