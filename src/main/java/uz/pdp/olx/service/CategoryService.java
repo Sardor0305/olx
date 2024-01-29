@@ -57,7 +57,7 @@ public Boolean delete(Long id) {
 public CategoryDto saveCategory(CategorySaveDto categorySaveDto){
       final  Category category = new Category();
     Category categoryAll = categoryRepository.findById(categorySaveDto.getParentCategoryId())
-            .orElseThrow(() -> new CategoryNotFoundException(categorySaveDto.getName()));
+            .orElseThrow(CategoryNotFoundException::new);
 
         category.setName(categorySaveDto.getName());
         category.setParentCategory(categoryAll);
