@@ -20,6 +20,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query("select new uz.pdp.olx.dto.ProductDto(p) from Product p where p.id = :id order by p.id desc ")
     Optional<ProductDto> finBYdId(@NonNull Long id);
 
+
     @Override
     void deleteById(@NonNull Long id);
 

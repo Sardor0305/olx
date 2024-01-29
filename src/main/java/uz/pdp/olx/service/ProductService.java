@@ -38,11 +38,11 @@ public class ProductService {
         product.setPrice(productSaveDto.getPrice());
         product.setItemCondition(productSaveDto.getItemCondition());
         product.setUser(userRepository.findById(productSaveDto.getUserId()).orElseThrow(()-> UserNotFoundException.byId(productSaveDto.getUserId())));
-        product.setCategory(categoryRepository.findById(productSaveDto.getCategoryId()).orElseThrow(
-                CategoryNotFoundException::new
-        ));
+        product.setCategory(categoryRepository.findById(productSaveDto.getCategoryId()).orElseThrow(CategoryNotFoundException::new));
         productRepository.save(product);
-        return new ProductDto(product.getTitle(),
+        return new ProductDto(
+                product.getId(),
+                product.getTitle(),
                 product.getDescription(),
                 new UserDto(product.getUser()),
                 product.getItemCondition(),
@@ -83,6 +83,7 @@ public ProductDto updateProduct(ProductUpdateDto productUpdateDto){
     product.setItemCondition(productUpdateDto.getItemCondition());
     product.setCategory(categoryRepository.findById(productUpdateDto.getCategoryId())
             .orElseThrow(CategoryNotFoundException::new));
+    productRepository.save(product);
     return new ProductDto(product);
 }
 

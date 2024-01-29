@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import uz.pdp.olx.enitiy.Image;
 
 @Repository
-public interface ImageRepositary extends JpaRepository<Image,Long> {
+public interface ImageRepository extends JpaRepository<Image,Long> {
 }
