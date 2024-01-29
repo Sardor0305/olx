@@ -1,5 +1,6 @@
 package uz.pdp.olx.controller;
 
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import uz.pdp.olx.dto.ImageDto;
 import uz.pdp.olx.dto.ResultMessage;
 import uz.pdp.olx.enitiy.Image;
 import uz.pdp.olx.service.ImageService;
@@ -24,10 +26,12 @@ import uz.pdp.olx.service.ImageService;
 public class ImageController {
     private final ImageService imageService;
 
-    @PostMapping(value = "/upload_file/{product_id}", consumes = {"multipart/form-data"})
+    @PostMapping(value = "/upload_file/{id}", consumes = {"multipart/form-data"}
+                )
     public ResponseEntity<?> upLoadFile(@RequestParam("file") MultipartFile file,
-                                        @PathVariable Long product_id) {
-        ResultMessage resultMessage = imageService.upLoadFile(file, product_id);
+                                        @PathVariable Long id)
+    {
+        ResultMessage resultMessage = imageService.upLoadFile(file,id);
         return ResponseEntity
                 .status(resultMessage.getSuccess()
                         ? HttpStatus.CREATED
@@ -37,23 +41,23 @@ public class ImageController {
 
     @GetMapping("/view/{image_id}")
     ResponseEntity<?> viewFile(@PathVariable Long image_id) {
-        Image image = imageService.getFindById(image_id);
+        ImageDto image = imageService.getFindById(image_id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(image.getContentType()));
         headers.setContentDisposition(ContentDisposition.builder("inline")
-                .filename("nmadir").build());
-        return new ResponseEntity<>(imageService.getData(image.getImagePath()),
+                .filename(image.getImagePath()).build());
+        return new ResponseEntity<>(imageService.getData("src/main/resources/"+image.getImagePath()),
                 headers, HttpStatus.OK);
     }
 
     @GetMapping("/download/{image_id}")
     ResponseEntity<?> downloadFile(@PathVariable Long image_id) {
-        Image image = imageService.getFindById(image_id);
+        ImageDto image = imageService.getFindById(image_id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(image.getContentType()));
         headers.setContentDisposition(ContentDisposition.builder("attachment")
-                .filename("nmadir").build());
-        return new ResponseEntity<>(imageService.getData(image.getImagePath()),
+                .filename(image.getImagePath()).build());
+        return new ResponseEntity<>(imageService.getData("src/main/resources/"+image.getImagePath()),
                 headers, HttpStatus.OK);
     }
 

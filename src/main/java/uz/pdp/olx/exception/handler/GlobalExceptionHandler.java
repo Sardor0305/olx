@@ -4,10 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import uz.pdp.olx.exception.AlreadyExistsException;
-import uz.pdp.olx.exception.NotFoundException;
-import uz.pdp.olx.exception.TokenIsExpiredException;
-import uz.pdp.olx.exception.TokenNotFoundException;
+import uz.pdp.olx.exception.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
