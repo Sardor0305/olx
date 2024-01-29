@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import uz.pdp.olx.dto.ResultMessage;
 import uz.pdp.olx.enitiy.Image;
-import uz.pdp.olx.enitiy.Product;
 import uz.pdp.olx.repository.ImageRepositary;
 import uz.pdp.olx.repository.ProductRepo;
 

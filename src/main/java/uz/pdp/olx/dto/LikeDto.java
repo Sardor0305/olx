@@ -1,10 +1,11 @@
 package uz.pdp.olx.dto;
 
-import lombok.*;
-import uz.pdp.olx.enitiy.Product;
-import uz.pdp.olx.enitiy.User;
-
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import uz.pdp.olx.enitiy.Like;
 
 @Getter
 @Setter
@@ -15,4 +16,9 @@ public class LikeDto {
     private Long id;
     private Long product;
     private Long user;
+
+    public LikeDto(Like like) {
+        this.product = like.getProduct().getId();
+        this.user = like.getUser().getId();
+    }
 }

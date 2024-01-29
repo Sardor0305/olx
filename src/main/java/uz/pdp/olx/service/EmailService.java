@@ -11,7 +11,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import uz.pdp.olx.dto.MailDto;
 import uz.pdp.olx.enitiy.Authentication;
 import uz.pdp.olx.enitiy.User;
 
@@ -32,19 +31,6 @@ public class EmailService {
 
     @Value("${frontend.support-email}")
     private String supportEmail;
-
-    public void send(MailDto mailDto) {
-        send(
-                mailDto.getFrom(),
-                mailDto.getTo(),
-                mailDto.getSubject(),
-                mailDto.getMessage()
-        );
-    }
-
-    @SneakyThrows
-    public void send(String from, String to, String subject, String message) {
-    }
 
     @SneakyThrows
     @Async

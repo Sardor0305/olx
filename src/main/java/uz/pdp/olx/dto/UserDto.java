@@ -1,6 +1,5 @@
 package uz.pdp.olx.dto;
 
-import jdk.dynalink.linker.LinkerServices;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

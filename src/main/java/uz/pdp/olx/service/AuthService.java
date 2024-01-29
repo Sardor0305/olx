@@ -1,17 +1,14 @@
 package uz.pdp.olx.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import uz.pdp.olx.enitiy.Authentication;
 import uz.pdp.olx.enitiy.User;
+import uz.pdp.olx.exception.NotFoundException;
 import uz.pdp.olx.exception.TokenIsExpiredException;
 import uz.pdp.olx.exception.TokenNotFoundException;
-import uz.pdp.olx.exception.UserNotFoundException;
 import uz.pdp.olx.jwt.JwtTokenProvider;
 import uz.pdp.olx.repository.AuthenticationRepository;
-import uz.pdp.olx.repository.UserRepository;
-
 import java.time.LocalDateTime;
 
 @Service
@@ -25,7 +22,7 @@ public class AuthService {
                 () -> TokenNotFoundException.byToken(token)
         );
         final var userNotFound = authenticationRepository.findById(authentication.getUser().getId()).orElseThrow(
-                () -> UserNotFoundException.byId(authentication.getUser().getId())
+                () -> new NotFoundException("User")
         );
 
         if (authentication.getExpirationTime().isBefore(LocalDateTime.now())) {

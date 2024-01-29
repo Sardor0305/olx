@@ -7,8 +7,6 @@ import lombok.Setter;
 import uz.pdp.olx.enam.ItemCondition;
 import uz.pdp.olx.enitiy.Category;
 import uz.pdp.olx.enitiy.Product;
-import uz.pdp.olx.enitiy.User;
-
 @Getter
 @Setter
 @AllArgsConstructor

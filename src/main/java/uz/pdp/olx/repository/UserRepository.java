@@ -1,7 +1,6 @@
 package uz.pdp.olx.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import uz.pdp.olx.enitiy.User;
 
@@ -17,6 +16,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
 
     Optional<Object> findByPhoneNumber(String phoneNumber);
-
-    void deleteUserById(Long userId);
 }
