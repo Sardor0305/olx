@@ -11,13 +11,14 @@ import uz.pdp.olx.enitiy.User;
 @NoArgsConstructor
 @Builder
 public class CommentDto {
+
     private String text;
-    private UserDto user;
-    private ProductDto product;
+    private Long userId;
+    private Long productId;
 
     public CommentDto(Comment comment) {
         this.text = comment.getText();
-        this.user = new UserDto(comment.getUser());
-        this.product = new ProductDto(comment.getProduct());
+        this.userId = comment.getUser().getId();
+        this.productId =  comment.getProduct().getId();
     }
 }

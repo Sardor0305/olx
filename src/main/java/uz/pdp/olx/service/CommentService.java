@@ -32,8 +32,8 @@ public class CommentService {
         commentRepository.save(comment);
         return new CommentDto(
                  comment.getText(),
-                 new UserDto(comment.getUser()),
-                 new ProductDto(comment.getProduct()));
+                 comment.getUser().getId(),
+                comment.getProduct().getId());
     }
 
     public CommentDto updateComment(CommentUpdateDto commentUpdateDto){
@@ -43,8 +43,9 @@ public class CommentService {
         comment.setText(commentUpdateDto.getText());
         commentRepository.save(comment);
         return new CommentDto(comment.getText(),
-                new UserDto(comment.getUser()),
-                new ProductDto(comment.getProduct()));
+                comment.getUser().getId(),
+                comment.getProduct().getId());
+
     }
 
     public Boolean deleteCommentById(Long id){
