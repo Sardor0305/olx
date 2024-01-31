@@ -3,7 +3,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/olx
     username: postgres
     driver-class-name: org.postgresql.Driver
-    password: adgjmp123
+    password: 123
   mail:
     host: sandbox.smtp.mailtrap.io
     port: 587

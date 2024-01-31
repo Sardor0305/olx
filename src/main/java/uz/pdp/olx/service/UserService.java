@@ -1,18 +1,20 @@
 package uz.pdp.olx.service;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import uz.pdp.olx.dto.UserDto;
 import uz.pdp.olx.dto.UserRegisterDto;
 import uz.pdp.olx.dto.UserUpdateDto;
 import uz.pdp.olx.enitiy.User;
-import uz.pdp.olx.exception.AlreadyExistsException;
-import uz.pdp.olx.exception.NotFoundException;
-import uz.pdp.olx.exception.NullOrEmptyException;
+import uz.pdp.olx.exception.*;
 import uz.pdp.olx.repository.AuthenticationRepository;
 import uz.pdp.olx.repository.UserRepository;
 
+import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -24,14 +26,14 @@ public class UserService {
     private final EmailService emailService;
     private final AuthenticationRepository authenticationRepository;
 
-    public UserDto register(final UserRegisterDto userRegisterDto) {
-        if (userRepository.existsByEmail(userRegisterDto.email())) {
+    public UserDto register(final  UserRegisterDto userRegisterDto) {
+        if (userRepository.existsByEmail(userRegisterDto.getEmail())) {
             throw new RuntimeException("This user already exist");
         }
 
         var user = new User();
-        user.setEmail(userRegisterDto.email());
-        user.setPassword(userRegisterDto.password());
+        user.setEmail(userRegisterDto.getEmail());
+        user.setPassword(userRegisterDto.getPassword());
         user = userRepository.save(user);
         emailService.sendEmailVerificationMessage(user);
         return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getPhoneNumber());
@@ -57,10 +59,8 @@ public class UserService {
             throw new NullOrEmptyException("Id");
         if (userUpdateDto.getUsername() != null && userRepository.findByUsername(userUpdateDto.getUsername()).isPresent())
             throw new AlreadyExistsException("Username");
-        if (userUpdateDto.getEmail() != null && userRepository.findByEmail(userUpdateDto.getEmail()).isPresent())
-            throw new AlreadyExistsException("Email");
-        if (userUpdateDto.getPhoneNumber() != null && userRepository.findByPhoneNumber(userUpdateDto.getPhoneNumber()).isPresent())
-            throw new AlreadyExistsException("Phone number");
+//        if (userUpdateDto.getPhoneNumber() != null && userRepository.findByPhoneNumber(userUpdateDto.getPhoneNumber()).isPresent())
+//            throw new AlreadyExistsException("Phone number");
         User user = userRepository.findById(userUpdateDto.getId()).orElseThrow(
                 () -> new NotFoundException("User")
         );
@@ -71,10 +71,13 @@ public class UserService {
                 .password(user.getPassword())
                 .phoneNumber(user.getPhoneNumber())
                 .build();
-        if (userUpdateDto.getPassword() != null)
-            updatedUser.setPassword(userUpdateDto.getPassword());
-        if (userUpdateDto.getEmail() != null)
-            updatedUser.setEmail(userUpdateDto.getEmail());
+        if (user.getPassword().equals(userUpdateDto.getOldPassword())) {
+            updatedUser.setPassword(userUpdateDto.getNewPassword());
+        }
+        else {
+            throw new PasswordNotMatchException();
+        }
+
         if (userUpdateDto.getPhoneNumber() != null)
             updatedUser.setPhoneNumber(userUpdateDto.getPhoneNumber());
 

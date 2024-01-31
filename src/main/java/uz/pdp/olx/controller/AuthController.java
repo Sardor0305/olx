@@ -1,5 +1,6 @@
 package uz.pdp.olx.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> signUp(@RequestBody final UserRegisterDto userRegisterDto){
+    public ResponseEntity<?> signUp(@RequestBody @Valid final UserRegisterDto userRegisterDto){
         return ResponseEntity.ok(userService.register(userRegisterDto));
     }
 
