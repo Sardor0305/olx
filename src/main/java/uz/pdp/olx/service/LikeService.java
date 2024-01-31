@@ -24,7 +24,7 @@ public class LikeService {
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
-    private final ModelMapper modelMapper = new ModelMapper();
+
 
 
 
