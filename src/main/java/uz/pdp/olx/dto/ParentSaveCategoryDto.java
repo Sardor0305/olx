@@ -1,5 +1,7 @@
 package uz.pdp.olx.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -9,6 +11,10 @@ import lombok.*;
 @Builder
 @ToString
 public class ParentSaveCategoryDto {
+    @NotBlank
+    @NotNull
     private String parentCategoryName;
+    @NotBlank
+    @NotNull
     private String parentImagePath;
 }
