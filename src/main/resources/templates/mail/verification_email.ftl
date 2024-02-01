@@ -62,10 +62,9 @@
     <h1>Email Verification</h1>
     <p>Thank you for signing up. To complete your registration, please click the link below to verify your email
         address:</p>
-    <a href="${verification_link}" class="verification-link">Verify Email Address</a>
+    <a href="${link}" class="verification-link">Verify Email Address</a>
     <p>If you did not sign up for our service, please ignore this email.</p>
     <div class="footer">
-        <p>For assistance, please contact <a>${support_email}</a></p>
         <p>Best Regards,<br>Spring Mail</p>
     </div>
 </div>

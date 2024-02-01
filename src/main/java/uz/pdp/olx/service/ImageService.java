@@ -2,11 +2,10 @@ package uz.pdp.olx.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import uz.pdp.olx.dto.ImageDto;
-import uz.pdp.olx.dto.ResultMessage;
+import uz.pdp.olx.dto.imagedto.ImageDto;
+import uz.pdp.olx.dto.imagedto.ResultMessage;
 import uz.pdp.olx.enitiy.Image;
 
 import uz.pdp.olx.exception.NotFoundException;
@@ -16,7 +15,6 @@ import uz.pdp.olx.repository.ProductRepository;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

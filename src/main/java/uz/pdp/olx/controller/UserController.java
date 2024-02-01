@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.olx.dto.UserUpdateDto;
+import uz.pdp.olx.dto.userdto.UserUpdateDto;
 import uz.pdp.olx.service.UserService;
 
 @RestController

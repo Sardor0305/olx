@@ -1,6 +1,6 @@
 package uz.pdp.olx.enitiy;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -22,12 +22,12 @@ public class Image {
     private Long id;
 
     private String imagePath;
-    @Column(nullable = false)
+
     private String contentType;
 
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Product product;
 

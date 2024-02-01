@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.olx.dto.ProductReviewDto;
+import uz.pdp.olx.dto.productdto.ProductReviewDto;
 import uz.pdp.olx.service.ProductReviewService;
 
 @RestController

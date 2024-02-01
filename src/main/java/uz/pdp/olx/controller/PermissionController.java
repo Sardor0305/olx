@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.olx.dto.PermissionDto;
-import uz.pdp.olx.dto.PermissionSaveDto;
+import uz.pdp.olx.dto.permissiondto.PermissionDto;
+import uz.pdp.olx.dto.permissiondto.PermissionSaveDto;
 import uz.pdp.olx.service.PermissionService;
 @RestController
 @RequestMapping("/permissions")

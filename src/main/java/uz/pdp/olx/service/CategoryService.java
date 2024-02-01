@@ -2,7 +2,7 @@ package uz.pdp.olx.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.pdp.olx.dto.*;
+import uz.pdp.olx.dto.categorydto.*;
 import uz.pdp.olx.enitiy.Category;
 import uz.pdp.olx.exception.CategoryNotFoundException;
 import uz.pdp.olx.exception.ParentCategoryNotFoundException;
