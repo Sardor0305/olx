@@ -17,6 +17,7 @@ import uz.pdp.olx.repository.PermissionRepository;
 import uz.pdp.olx.repository.UserRepository;
 import uz.pdp.olx.security.jwt.JwtTokenProvider;
 
+import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,7 +48,8 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(userRegisterDto.password()));
         user.setPermissions(List.of(permissionRepository.findByValue("VIEW_PRODUCTS").get()));
         user = userRepository.save(user);
-        return new JwtDto(jwtTokenProvider.generateTokenForAuth(user));
+        emailService.sendEmailVerificationMessage(user);
+        return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getPhoneNumber());
     }
 
     public UserDto findById(Long id) {
@@ -84,10 +86,13 @@ public class UserService {
                 .password(user.getPassword())
                 .phoneNumber(user.getPhoneNumber())
                 .build();
-        if (userUpdateDto.getPassword() != null)
-            updatedUser.setPassword(userUpdateDto.getPassword());
-        if (userUpdateDto.getEmail() != null)
-            updatedUser.setEmail(userUpdateDto.getEmail());
+        if (user.getPassword().equals(userUpdateDto.getOldPassword())) {
+            updatedUser.setPassword(userUpdateDto.getNewPassword());
+        }
+        else {
+            throw new PasswordNotMatchException();
+        }
+
         if (userUpdateDto.getPhoneNumber() != null)
             updatedUser.setPhoneNumber(userUpdateDto.getPhoneNumber());
 
@@ -107,6 +112,7 @@ public class UserService {
         if (id == null)
             throw new NullOrEmptyException("Id");
         else {
+            authenticationRepository.deleteAuthenticationByUserId(id);
             userRepository.delete(userRepository.findById(id)
                     .orElseThrow(
                             () -> new NotFoundException("User")
