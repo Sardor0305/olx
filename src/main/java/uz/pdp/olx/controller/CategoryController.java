@@ -3,7 +3,10 @@ package uz.pdp.olx.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.olx.dto.*;
+import uz.pdp.olx.dto.categorydto.CategorySaveDto;
+import uz.pdp.olx.dto.categorydto.CategoryUpdateDto;
+import uz.pdp.olx.dto.categorydto.ParentSaveCategoryDto;
+import uz.pdp.olx.dto.categorydto.ParentUpdateCategoryDto;
 import uz.pdp.olx.enitiy.Category;
 import uz.pdp.olx.service.CategoryService;
 

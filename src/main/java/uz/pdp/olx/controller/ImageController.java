@@ -1,6 +1,5 @@
 package uz.pdp.olx.controller;
 
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -14,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import uz.pdp.olx.dto.ImageDto;
-import uz.pdp.olx.dto.ResultMessage;
-import uz.pdp.olx.enitiy.Image;
+import uz.pdp.olx.dto.imagedto.ImageDto;
+import uz.pdp.olx.dto.imagedto.ResultMessage;
 import uz.pdp.olx.service.ImageService;
 
 

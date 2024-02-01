@@ -1,18 +1,21 @@
 package uz.pdp.olx.service;
 
-import jakarta.validation.Valid;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.MethodParameter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import uz.pdp.olx.dto.UserDto;
-import uz.pdp.olx.dto.UserRegisterDto;
-import uz.pdp.olx.dto.UserUpdateDto;
+import uz.pdp.olx.dto.jwtdto.JwtDto;
+import uz.pdp.olx.dto.userdto.UserDto;
+import uz.pdp.olx.dto.userdto.UserRegisterDto;
+import uz.pdp.olx.dto.userdto.UserUpdateDto;
 import uz.pdp.olx.enitiy.User;
-import uz.pdp.olx.exception.*;
-import uz.pdp.olx.repository.AuthenticationRepository;
+import uz.pdp.olx.exception.AlreadyExistsException;
+import uz.pdp.olx.exception.NotFoundException;
+import uz.pdp.olx.exception.NullOrEmptyException;
+import uz.pdp.olx.repository.PermissionRepository;
 import uz.pdp.olx.repository.UserRepository;
+import uz.pdp.olx.security.jwt.JwtTokenProvider;
 
 import java.lang.reflect.Parameter;
 import java.util.List;
@@ -24,16 +27,26 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final EmailService emailService;
-    private final AuthenticationRepository authenticationRepository;
+    private final PermissionRepository permissionRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserDto register(final  UserRegisterDto userRegisterDto) {
-        if (userRepository.existsByEmail(userRegisterDto.getEmail())) {
-            throw new RuntimeException("This user already exist");
+    public JwtDto register(final UserRegisterDto userRegisterDto) {
+        if (userRegisterDto == null) {
+            throw new NullOrEmptyException("Username");
+        }
+        if (userRegisterDto.email() != null) {
+            if (userRepository.existsByEmail(userRegisterDto.email()) &&
+                    userRepository.existsByUsername(userRegisterDto.username())) {
+                throw new AlreadyExistsException("User");
+            }
+            emailService.sendEmailVerificationMessage(userRegisterDto.username(), userRegisterDto.email());
         }
 
         var user = new User();
-        user.setEmail(userRegisterDto.getEmail());
-        user.setPassword(userRegisterDto.getPassword());
+        user.setUsername(userRegisterDto.username());
+        user.setPassword(passwordEncoder.encode(userRegisterDto.password()));
+        user.setPermissions(List.of(permissionRepository.findByValue("VIEW_PRODUCTS").get()));
         user = userRepository.save(user);
         emailService.sendEmailVerificationMessage(user);
         return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getPhoneNumber());
@@ -59,8 +72,10 @@ public class UserService {
             throw new NullOrEmptyException("Id");
         if (userUpdateDto.getUsername() != null && userRepository.findByUsername(userUpdateDto.getUsername()).isPresent())
             throw new AlreadyExistsException("Username");
-//        if (userUpdateDto.getPhoneNumber() != null && userRepository.findByPhoneNumber(userUpdateDto.getPhoneNumber()).isPresent())
-//            throw new AlreadyExistsException("Phone number");
+        if (userUpdateDto.getEmail() != null && userRepository.findByEmail(userUpdateDto.getEmail()).isPresent())
+            throw new AlreadyExistsException("Email");
+        if (userUpdateDto.getPhoneNumber() != null && userRepository.findByPhoneNumber(userUpdateDto.getPhoneNumber()).isPresent())
+            throw new AlreadyExistsException("Phone number");
         User user = userRepository.findById(userUpdateDto.getId()).orElseThrow(
                 () -> new NotFoundException("User")
         );
@@ -107,5 +122,23 @@ public class UserService {
 
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    public boolean verify(String token) {
+        if(token == null) {
+            return false;
+        }
+        Claims claims = jwtTokenProvider.parseAllClaims(token);
+        if (jwtTokenProvider.isValid(token)) {
+            String email = claims.getSubject();
+            String username = claims.get("username", String.class);
+            if (userRepository.findByUsername(username).isPresent()) {
+                User user = userRepository.findByUsername(username).get();
+                user.setEmail(email);
+                userRepository.save(user);
+                return true;
+            }
+        }
+        return false;
     }
 }

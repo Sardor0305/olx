@@ -3,7 +3,7 @@ package uz.pdp.olx.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uz.pdp.olx.dto.ProductReviewDto;
+import uz.pdp.olx.dto.productdto.ProductReviewDto;
 import uz.pdp.olx.enitiy.Product;
 import uz.pdp.olx.enitiy.ProductReview;
 import uz.pdp.olx.enitiy.User;
@@ -68,9 +68,8 @@ public class ProductReviewService {
         } else {
             for (Product product : productsToDelete) {
                 User owner = product.getUser();
-                productReviewRepository.deleteByProductId(product.getId());
-                productRepository.deleteById(product.getId());
-                userRepository.deleteById(owner.getId());
+                productRepository.deleteWithCascade(product.getId());
+                userRepository.deleteWithCascade(owner.getId());
             }
         }
     }

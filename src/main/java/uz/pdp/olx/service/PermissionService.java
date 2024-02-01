@@ -2,8 +2,8 @@ package uz.pdp.olx.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uz.pdp.olx.dto.PermissionDto;
-import uz.pdp.olx.dto.PermissionSaveDto;
+import uz.pdp.olx.dto.permissiondto.PermissionDto;
+import uz.pdp.olx.dto.permissiondto.PermissionSaveDto;
 import uz.pdp.olx.enitiy.Permission;
 import uz.pdp.olx.exception.NotFoundException;
 import uz.pdp.olx.exception.NullOrEmptyException;

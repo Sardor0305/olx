@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.olx.dto.UserRegisterDto;
-import uz.pdp.olx.service.AuthService;
+import uz.pdp.olx.dto.userdto.UserRegisterDto;
 import uz.pdp.olx.service.UserService;
 
 @RestController
@@ -18,7 +17,6 @@ import uz.pdp.olx.service.UserService;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
     private final UserService userService;
 
     @PostMapping("/register")
@@ -28,7 +26,9 @@ public class AuthController {
 
     @GetMapping("/verify")
     public ResponseEntity<?> verifyEmail(@RequestParam String token){
-        authService.validateUserAuthentication(token);
-        return ResponseEntity.ok("Email verified");
+        if (userService.verify(token)) {
+            return ResponseEntity.ok("Email verified");
+        }
+        return ResponseEntity.badRequest().body("Authentication Failed");
     }
 }

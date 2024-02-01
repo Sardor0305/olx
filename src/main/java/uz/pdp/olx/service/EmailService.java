@@ -11,8 +11,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import uz.pdp.olx.enitiy.Authentication;
 import uz.pdp.olx.enitiy.User;
+import uz.pdp.olx.security.jwt.JwtTokenProvider;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -24,30 +24,28 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
     private final Configuration configuration;
-    private final AuthService authService;
-
+    private final JwtTokenProvider jwtTokenProvider;
     @Value("${frontend.url}")
     private String verificationUrl;
 
-    @Value("${frontend.support-email}")
-    private String supportEmail;
-
     @SneakyThrows
     @Async
-    public void sendEmailVerificationMessage(final User user) {
+    public void sendEmailVerificationMessage(String username, String email) {
         TimeUnit.SECONDS.sleep(10);
         var helper = new MimeMessageHelper(mailSender.createMimeMessage());
         helper.setFrom("pdp@gmail.com");
-        helper.setTo(user.getEmail());
+        helper.setTo(email);
         Template template = configuration.getTemplate("mail/verification_email.ftl");
-        Authentication authentication = authService.createAuthentication(user);
         String html = FreeMarkerTemplateUtils.processTemplateIntoString(
                 template,
-                Map.of("verification_link", verificationUrl + authentication.getToken(),
-                        "support_email", supportEmail)
+                Map.of("link", verificationUrl + jwtTokenProvider.generateTokenForEmail(
+                        User.builder()
+                                .username(username)
+                                .email(email)
+                                .build())
+                )
         );
         helper.setText(html, true);
         mailSender.send(helper.getMimeMessage());
-        log.info("[{}] email sent", Thread.currentThread().getName());
     }
 }
