@@ -4,14 +4,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.olx.dto.UserUpdateDto;
+import uz.pdp.olx.dto.userdto.UserUpdateDto;
 import uz.pdp.olx.service.UserService;
 
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-public class
-UserController {
+public class UserController {
 
     private final UserService userService;
 

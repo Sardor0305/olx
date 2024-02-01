@@ -13,11 +13,11 @@ import uz.pdp.olx.enitiy.User;
 import uz.pdp.olx.exception.AlreadyExistsException;
 import uz.pdp.olx.exception.NotFoundException;
 import uz.pdp.olx.exception.NullOrEmptyException;
+import uz.pdp.olx.exception.PasswordNotMatchException;
 import uz.pdp.olx.repository.PermissionRepository;
 import uz.pdp.olx.repository.UserRepository;
 import uz.pdp.olx.security.jwt.JwtTokenProvider;
 
-import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,9 +47,7 @@ public class UserService {
         user.setUsername(userRegisterDto.username());
         user.setPassword(passwordEncoder.encode(userRegisterDto.password()));
         user.setPermissions(List.of(permissionRepository.findByValue("VIEW_PRODUCTS").get()));
-        user = userRepository.save(user);
-        emailService.sendEmailVerificationMessage(user);
-        return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getPhoneNumber());
+        return new JwtDto(jwtTokenProvider.generateTokenForAuth(userRepository.save(user)));
     }
 
     public UserDto findById(Long id) {
@@ -112,7 +110,6 @@ public class UserService {
         if (id == null)
             throw new NullOrEmptyException("Id");
         else {
-            authenticationRepository.deleteAuthenticationByUserId(id);
             userRepository.delete(userRepository.findById(id)
                     .orElseThrow(
                             () -> new NotFoundException("User")
